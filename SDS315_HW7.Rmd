@@ -40,7 +40,7 @@ armfolding_SE <- sqrt((M_Prop * (1-M_Prop) / M_Ct) + (FM_Prop * (1-FM_Prop) / FM
 
 ```
 
-The table above describes several statistics relating to a sample of students in an experiment. LeftTopProp refers to the proportion of students for each sex whose left arm was on top when folding their arms. The difference in proportion between the two sexes (Male - Female) were approximately 0.049. A test for difference proportions was conducted using the above values to result in a 95% confidence interval, demonstrated by the formula: difference in sample proportions $\pm$ z\* times the standard error of the sample difference in proportions. The specific numbers come out to be about 0.049 $\pm$ 1.96 \* 0.067 resulting in the interval:
+The table above describes several statistics relating to a sample of students in an experiment. LeftTopProp refers to the proportion of students for each sex whose left arm was on top when folding their arms. The difference in proportion between the two sexes (Male - Female) was approximately 0.049. A test for difference proportions was conducted using the above values to result in a 95% confidence interval, demonstrated by the formula: difference in sample proportions $\pm$ z\* times the standard error of the sample difference in proportions. The specific numbers come out to be about 0.049 $\pm$ 1.96 \* 0.067 resulting in the interval:
 
 ```{r echo = FALSE}
 prop.test(LonR_fold ~ factor(Sex, levels = c("Male","Female")), data = armfold, success = 1,correct = FALSE)
@@ -86,14 +86,14 @@ kable(cv2_1996,caption = "GOTV Call Proportions by 1996 Voting Status")
 prop.test(GOTV_call ~ factor(voted1996, levels = c(1,0)), data = turnout, success = '1',correct = FALSE)
 ```
 
-Voting status in 1996 (1 = Voted in the tables) is shown to result in around a 1.63% increase in an individual's likelihood to recieve a GOTV callup, with a 95% confidence interval of [1.08, 2.18] percent.
+Voting status in 1996 (1 = Voted in the tables) is shown to result in around a 1.63% increase in an individual's likelihood to recieve a GOTV callup, with a 95% confidence interval of the true difference of [1.08, 2.18] percent.
 
 ```{r echo = FALSE}
 kable(cv_1996,caption = "1998 Voting Proportions by 1996 Voting Status")
 prop.test(voted1998 ~ factor(voted1996, levels = c(1,0)), data = turnout, success = '1',correct = FALSE)
 ```
 
-Additionally, voting status in 1996 is shown to result in around a 41.03% increase in an individual's likelihood to vote in 1998, with a 95% confidence interval of [39.34, 42.73] percent.
+Additionally, voting status in 1996 is shown to result in around a 41.03% increase in an individual's likelihood to vote in 1998, with a 95% confidence interval of the true difference of [39.34, 42.73] percent.
 
 \pagebreak
 
@@ -106,14 +106,14 @@ kable(cv2_party, caption = "GOTV Call Proportions by Major Party Participiation"
 prop.test(GOTV_call ~ factor(MAJORPTY, levels = c(1,0)), data = turnout, success = '1',correct = FALSE)
 ```
 
-Participation in a major party (1 = Yes, in the tables) is shown to result in around a 0.67% increase in an individual's likelihood to recieve a GOTV callup, with a 95% confidence interval of [0.07, 1.27] percent.
+Participation in a major party (1 = Yes, in the tables) is shown to result in around a 0.67% increase in an individual's likelihood to recieve a GOTV callup, with a 95% confidence interval of the true difference of [0.07, 1.27] percent.
 
 ```{r echo = FALSE}
 kable(cv_party, caption = "1998 Voting Proportions by Major Party Participation")
 prop.test(voted1998 ~ factor(MAJORPTY, levels = c(1,0)), data = turnout, success = '1',correct = FALSE)
 ```
 
-Additionally, participation in a major party is shown to result in around a 13.23% increase in an individual's likelihood to vote in 1998, with a 95% confidence interval of [11.14, 15.32] percent.
+Additionally, participation in a major party is shown to result in around a 13.23% increase in an individual's likelihood to vote in 1998, with a 95% confidence interval of the true difference of proportions of [11.14, 15.32] percent.
 
 \pagebreak
 
@@ -170,7 +170,7 @@ cv2_age_M <- matched %>% group_by(AGE) %>% summarize('GOTV_call_prop' = round(su
 ggplot(cv2_age_M) + aes(x = AGE, y = GOTV_call_prop) + geom_line()
 ```
 
-A new matched dataset was created. Now, the proportion of people who received a GOTV call is approximately equal regardless of whether or not they voted, and likewise for the factor of whether the recipient was in a major party. The factor of age's effect on GOTV call rates was also attempted to be matched, with an outlier at the age of 88, where no individual within the original sample used to match data.
+A new matched dataset was created. Now, the proportion of people who received a GOTV call is approximately equal regardless of whether or not they voted, and likewise for the factor of whether the recipient was in a major party. The factor of age's effect on GOTV call rates was also attempted to be matched, with an outlier at the age of 88, where no individual within the original sample at that age got a GOTV call, reflected by the matched dataset.
 
 ```{r echo = FALSE}
 matched_callup <- matched %>% group_by(GOTV_call) %>% summarize('Voted1998Prop' = sum(voted1998 == 1) / n())
